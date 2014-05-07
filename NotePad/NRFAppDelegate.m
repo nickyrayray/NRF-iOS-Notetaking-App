@@ -7,6 +7,7 @@
 //
 
 #import "NRFAppDelegate.h"
+#import "NRFTableViewController.h"
 
 @implementation NRFAppDelegate
 
@@ -14,6 +15,12 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    NRFTableViewController *noteList = [[NRFTableViewController alloc] init];
+    UINavigationController *main = [[UINavigationController alloc] initWithRootViewController:noteList];
+    
+    self.window.rootViewController = main;
+    
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
