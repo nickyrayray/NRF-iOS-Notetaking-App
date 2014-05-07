@@ -20,6 +20,8 @@
 
 @interface NRFNoteDetailViewController : UIViewController
 
+@property (nonatomic) id<NRFNoteDetailViewControllerDelegate> delegate;
+
 - (instancetype) initWithNote:(NRFNote *)note atRow:(NSUInteger *)row;
 
 @end

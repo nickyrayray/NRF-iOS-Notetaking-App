@@ -126,6 +126,11 @@
 - (void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    NRFNoteDetailViewController *noteDetailVC = [[NRFNoteDetailViewController alloc] initWithNote:self.notes[indexPath.row] atRow:(NSUInteger *)indexPath.row];
+    
+    noteDetailVC.delegate = self;
+    
+    [self.navigationController pushViewController:noteDetailVC animated:YES];
 }
 
 - (void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note

@@ -12,7 +12,7 @@
 @interface NRFNoteDetailViewController () <NRFNoteEditViewControllerDelegate>
 
 @property (nonatomic) NRFNote *note;
-@property (nonatomic) NSInteger *row;
+@property (nonatomic) NSUInteger *row;
 
 @property (weak, nonatomic) IBOutlet UILabel *noteText;
 
@@ -34,13 +34,21 @@
 {
     [super viewDidLoad];
     
+    [self viewView];
+    
+}
+
+-(void) viewView
+{
     self.title = self.note.title;
     self.noteText.text = self.note.content;
     
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed:)];
     
-    self.navigationItem.rightBarButtonItem = editButton;
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
     
+    self.navigationItem.rightBarButtonItem = editButton;
+    self.navigationItem.leftBarButtonItem = doneButton;
 }
 
 -(void) editButtonPressed:(id)sender
@@ -51,9 +59,19 @@
     [self.navigationController pushViewController:noteEditVC animated:YES];
 }
 
+-(void) doneButtonPressed:(id)sender
+{
+    [self.delegate detailViewController:self didFinishWithNote:self.note atRow:*self.row];
+}
+
 -(void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note
 {
     self.note = note;
+    [self.navigationController popViewControllerAnimated:YES];
+    [self viewView];
 }
+
+
+
 
 @end
