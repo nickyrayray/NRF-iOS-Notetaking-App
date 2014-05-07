@@ -48,10 +48,20 @@
     [super viewDidLoad];
     
     self.title = @"Notes";
+    [self selectView];
+    
+}
+
+- (void) selectView
+{
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonPressed:)];
     
-    self.navigationItem.rightBarButtonItem = addButton;
+    if(self.notes.count > 0){
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed:)];
+        self.navigationItem.leftBarButtonItem = editButton;
+    }
     
+    self.navigationItem.rightBarButtonItem = addButton;
 }
 
 - (void) addButtonPressed:(id)sender
@@ -61,6 +71,38 @@
     
     [self.navigationController pushViewController:noteEditVC animated:YES];
     
+}
+
+-(void) editButtonPressed:(id)sender
+{
+    [self setEditing:YES animated:YES];
+}
+
+-(void) setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    if(editing){
+        [super setEditing:YES animated:YES];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEditingPressed:)];
+        
+        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = doneButton;
+    } else {
+        [super setEditing:NO animated:YES];
+        [self selectView];
+    }
+}
+
+
+-(void) doneEditingPressed:(id)sender
+{
+    [self setEditing:NO animated:YES];
+}
+
+
+-(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.notes removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -90,6 +132,8 @@
     [self.notes addObject:note];
     
     [self.tableView reloadData];
+    
+    [self selectView];
     
     [self.navigationController  popViewControllerAnimated:YES];
     
