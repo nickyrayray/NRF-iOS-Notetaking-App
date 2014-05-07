@@ -48,6 +48,18 @@
     [super viewDidLoad];
     
     self.title = @"Notes";
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonPressed:)];
+    
+    self.navigationItem.rightBarButtonItem = addButton;
+    
+}
+
+- (void) addButtonPressed:(id)sender
+{
+    NRFNoteEditViewController *noteEditVC = [[NRFNoteEditViewController alloc] initWithNote:nil];
+    noteEditVC.delegate = self;
+    
+    [self.navigationController pushViewController:noteEditVC animated:YES];
     
 }
 
@@ -73,11 +85,13 @@
     
 }
 
-- (void) editController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note
+- (void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note
 {
     [self.notes addObject:note];
     
     [self.tableView reloadData];
+    
+    [self.navigationController  popViewControllerAnimated:YES];
     
 }
 

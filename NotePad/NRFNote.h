@@ -13,5 +13,6 @@
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSDate *time;
+@property (nonatomic) UIImage *image;
 
 @end

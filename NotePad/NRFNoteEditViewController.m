@@ -11,15 +11,20 @@
 
 @interface NRFNoteEditViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *noteTitle;
+
+@property (weak, nonatomic) IBOutlet UITextView *noteText;
+
+
 @property (nonatomic) NRFNote *note;
 
 @end
 
 @implementation NRFNoteEditViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withNote:(NRFNote *) note
+- (instancetype)initWithNote:(NRFNote *)note
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"NRFNoteEditViewController" bundle:nil];
     if (self) {
         self.note = note;
     }
@@ -29,13 +34,35 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    if(self.note){
+        [self.noteTitle setText:self.note.title];
+        [self.noteText setText:self.note.content];
+    }
+    
+    self.title = @"Add Note:";
+    
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
+    
+    self.navigationItem.rightBarButtonItem = saveButton;
+    
 }
 
-- (void)didReceiveMemoryWarning
+- (void) saveButtonPressed:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if(!self.note){
+        NRFNote *note = [[NRFNote alloc] init];
+        self.note = note;
+    }
+    
+    self.note.title = self.noteTitle.text;
+    self.note.content = self.noteText.text;
+    
+    [self.delegate editViewController:self didFinishWithNote:self.note];
+    
 }
+
+
+
 
 @end

@@ -13,10 +13,14 @@
 
 @protocol NRFNoteEditViewControllerDelegate <NSObject>
 
-- (void) editController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note;
+- (void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note;
 
 @end
 
 @interface NRFNoteEditViewController : UIViewController
+
+@property (nonatomic) id<NRFNoteEditViewControllerDelegate> delegate;
+
+- (instancetype) initWithNote:(NRFNote *)note;
 
 @end
