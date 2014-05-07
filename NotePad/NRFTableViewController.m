@@ -8,9 +8,10 @@
 
 #import "NRFTableViewController.h"
 #import "NRFNote.h"
+#import "NRFNoteDetailViewController.h"
 #import "NRFNoteEditViewController.h"
 
-@interface NRFTableViewController() <UITableViewDataSource, UITableViewDelegate,NRFNoteEditViewControllerDelegate>
+@interface NRFTableViewController() <UITableViewDataSource, UITableViewDelegate,NRFNoteEditViewControllerDelegate, NRFNoteDetailViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *notes;
@@ -139,5 +140,20 @@
     
 }
 
+- (void) detailViewController:(NRFNoteDetailViewController *)noteDetailVC didFinishWithNote:(NRFNote *)note atRow:(NSUInteger)row
+{
+    if(note)
+    {
+        [self.notes replaceObjectAtIndex:row withObject:note];
+    } else {
+        [self.notes removeObjectAtIndex:row];
+    }
+    
+    [self.tableView reloadData];
+    
+    [self selectView];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 @end
