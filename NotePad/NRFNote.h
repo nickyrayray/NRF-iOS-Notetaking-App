@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NRFNote : NSObject <NSCoding>
+@interface NRFNote : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic) NSString *content;
-@property (nonatomic) NSString *title;
-@property (nonatomic) NSDate *date;
-@property (nonatomic) NSDateFormatter *formatter;
-@property (nonatomic) UIImage *image;
+@property (nonatomic, strong) NSString *content;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSDateFormatter *formatter;
+@property (nonatomic, strong) UIImage *image;
 
 -(instancetype) init;
 

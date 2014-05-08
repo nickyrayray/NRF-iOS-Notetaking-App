@@ -17,7 +17,7 @@
     NRFTableViewController *noteList = [[NRFTableViewController alloc] init];
     self.noteList = noteList;
     [self loadData];
-    UINavigationController *main = [[UINavigationController alloc] initWithRootViewController:noteList];
+    UINavigationController *main = [[UINavigationController alloc] initWithRootViewController:self.noteList];
     
     self.window.rootViewController = main;
     
@@ -31,7 +31,7 @@
 {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *myDataPath = [documentsPath stringByAppendingString:@"notePadData"];
-    NSURL *documentsURL = [NSURL URLWithString:myDataPath];
+    NSURL *documentsURL = [NSURL fileURLWithPath:myDataPath];
     NSData *appData = [NSKeyedArchiver archivedDataWithRootObject:self.noteList];
     [appData writeToURL:documentsURL atomically:YES];
 }
@@ -40,7 +40,7 @@
 {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *myDataPath = [documentsPath stringByAppendingString:@"notePadData"];
-    NSURL *documentsURL = [NSURL URLWithString:myDataPath];
+    NSURL *documentsURL = [NSURL fileURLWithPath:myDataPath];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     

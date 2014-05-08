@@ -43,4 +43,17 @@
     [coder encodeObject:self.image forKey:@"image"];
 }
 
+- (id) copyWithZone:(NSZone *)zone
+{
+    NRFNote *copy = [[NRFNote allocWithZone:zone] init];
+    if(copy){
+        copy.title = self.title;
+        copy.content = self.content;
+        copy.date = self.date;
+        copy.formatter = self.formatter;
+        copy.image = self.image;
+    }
+    return copy;
+}
+
 @end
