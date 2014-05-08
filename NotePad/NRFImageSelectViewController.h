@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NRFNote.h"
 
 @interface NRFImageSelectViewController : UIViewController
 
+-(instancetype) initWithNote:(NRFNote *)note;
+-(instancetype) initWithNote:(NRFNote *)note fromViewer:(BOOL)fromViewer;
 @end

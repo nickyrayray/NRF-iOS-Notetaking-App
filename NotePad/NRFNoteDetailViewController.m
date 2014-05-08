@@ -8,6 +8,7 @@
 
 #import "NRFNoteDetailViewController.h"
 #import "NRFNoteEditViewController.h"
+#import "NRFImageSelectViewController.h"
 
 @interface NRFNoteDetailViewController () <NRFNoteEditViewControllerDelegate>
 
@@ -76,6 +77,10 @@
     [self viewView];
 }
 
+- (IBAction)viewPictureButtonPressed:(id)sender {
+    NRFImageSelectViewController *imageSelectVC = [[NRFImageSelectViewController alloc] initWithNote:self.note fromViewer:YES];
+    [self.navigationController pushViewController:imageSelectVC animated:YES];
+}
 
 
 
