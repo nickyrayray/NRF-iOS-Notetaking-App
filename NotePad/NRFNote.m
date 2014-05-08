@@ -30,6 +30,7 @@
         self.date = [decoder decodeObjectForKey:@"date"];
         self.formatter = [decoder decodeObjectForKey:@"formatter"];
         self.image = [decoder decodeObjectForKey:@"image"];
+        self.imageTitle = [decoder decodeObjectForKey:@"imageTitle"];
     }
     return self;
 }
@@ -41,6 +42,7 @@
     [coder encodeObject:self.date forKey:@"date"];
     [coder encodeObject:self.formatter forKey:@"formatter"];
     [coder encodeObject:self.image forKey:@"image"];
+    [coder encodeObject:self.imageTitle forKey:@"imageTitle"];
 }
 
 - (id) copyWithZone:(NSZone *)zone

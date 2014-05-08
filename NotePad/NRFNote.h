@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSDateFormatter *formatter;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSString *imageTitle;
 
 -(instancetype) init;
 

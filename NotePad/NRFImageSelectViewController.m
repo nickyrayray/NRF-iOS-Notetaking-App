@@ -16,6 +16,7 @@
 @property (nonatomic) NRFNote *note;
 @property (nonatomic) BOOL fromViewer;
 @property (weak, nonatomic) IBOutlet UIButton *fetchButton;
+@property (weak, nonatomic) IBOutlet UITextField *imageTitle;
 
 @end
 
@@ -45,23 +46,43 @@
 {
     [super viewDidLoad];
     
-    if(self.note.image){
-        self.image = self.note.image;
-        self.imageView.image = self.image;
-    }
-    
     if(!self.fromViewer){
         UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
     
         self.navigationItem.rightBarButtonItem = saveButton;
+        self.title = @"Add Image";
+        if(self.note.image){
+            self.image = self.note.image;
+            self.imageView.image = self.image;
+            self.imageTitle.text = self.note.imageTitle;
+            [self.fetchButton setTitle:@"Change Image" forState:UIControlStateNormal];
+            self.title = @"Edit image";
+        }
     } else {
         self.fetchButton.hidden = YES;
+        self.imageTitle.hidden = YES;
+        self.title = self.note.imageTitle;
+        self.image = self.note.image;
+        self.imageView.image = self.image;
     }
 }
 
 -(void) saveButtonPressed:(id)saveButtonPressed
 {
-    self.note.image = self.image;
+    if(self.imageView.image){
+        self.note.image = self.image;
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"No Image Found" message:@"Please select an image to save; otherwise use the back button to return to previous screen." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return;
+    }
+    
+    if(![self.imageTitle.text isEqual: @""]){
+        self.note.imageTitle = self.imageTitle.text;
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"No Image Title Found" message:@"Please input an image title at the bottom of the screen in the text field." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return;
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -85,10 +106,16 @@
     self.imageView.image = image;
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    if(self.image){
+        [self.fetchButton setTitle:@"Change Image" forState:UIControlStateNormal];
+    }
 }
 
 -(void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+    if(self.image){
+        [self.fetchButton setTitle:@"Change Image" forState:UIControlStateNormal];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
