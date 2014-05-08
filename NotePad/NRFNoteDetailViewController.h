@@ -14,7 +14,8 @@
 @protocol NRFNoteDetailViewControllerDelegate <NSObject>
 
 - (void) detailViewController:(NRFNoteDetailViewController *)noteDetailVC
-            didFinishWithNote:(NRFNote *)note atRow:(NSUInteger)row;
+            didFinishWithNote:(NRFNote *)note
+                        atRow:(NSInteger)row;
 
 @end
 
@@ -22,6 +23,6 @@
 
 @property (nonatomic) id<NRFNoteDetailViewControllerDelegate> delegate;
 
-- (instancetype) initWithNote:(NRFNote *)note atRow:(NSUInteger *)row;
+- (instancetype) initWithNote:(NRFNote *)note atRow:(NSInteger)row withDelegate:(id<NRFNoteDetailViewControllerDelegate>) delegate;
 
 @end

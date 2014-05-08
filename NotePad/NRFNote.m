@@ -10,5 +10,15 @@
 
 @implementation NRFNote
 
+-(instancetype) init
+{
+    self = [super init];
+    if(self){
+        self.formatter = [[NSDateFormatter alloc] init];
+        [self.formatter setDateStyle:NSDateFormatterMediumStyle];
+        [self.formatter setTimeStyle:NSDateFormatterMediumStyle];
+    }
+    return self;
+}
 
 @end

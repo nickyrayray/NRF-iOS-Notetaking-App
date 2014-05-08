@@ -12,6 +12,8 @@
 		380D4AB6191A0B870042B0DA /* NRFNoteEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 380D4AB4191A0B870042B0DA /* NRFNoteEditViewController.xib */; };
 		380D4ABA191AE9AB0042B0DA /* NRFNoteDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380D4AB8191AE9AB0042B0DA /* NRFNoteDetailViewController.m */; };
 		380D4ABB191AE9AB0042B0DA /* NRFNoteDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 380D4AB9191AE9AB0042B0DA /* NRFNoteDetailViewController.xib */; };
+		380D4ABF191B2DAF0042B0DA /* NRFImageSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380D4ABD191B2DAF0042B0DA /* NRFImageSelectViewController.m */; };
+		380D4AC0191B2DAF0042B0DA /* NRFImageSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 380D4ABE191B2DAF0042B0DA /* NRFImageSelectViewController.xib */; };
 		38A51B6B1918765900FCB55D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A51B6A1918765900FCB55D /* Foundation.framework */; };
 		38A51B6D1918765900FCB55D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A51B6C1918765900FCB55D /* CoreGraphics.framework */; };
 		38A51B6F1918765900FCB55D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A51B6E1918765900FCB55D /* UIKit.framework */; };
@@ -46,6 +48,9 @@
 		380D4AB7191AE9AB0042B0DA /* NRFNoteDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRFNoteDetailViewController.h; sourceTree = "<group>"; };
 		380D4AB8191AE9AB0042B0DA /* NRFNoteDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRFNoteDetailViewController.m; sourceTree = "<group>"; };
 		380D4AB9191AE9AB0042B0DA /* NRFNoteDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRFNoteDetailViewController.xib; sourceTree = "<group>"; };
+		380D4ABC191B2DAF0042B0DA /* NRFImageSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NRFImageSelectViewController.h; sourceTree = "<group>"; };
+		380D4ABD191B2DAF0042B0DA /* NRFImageSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NRFImageSelectViewController.m; sourceTree = "<group>"; };
+		380D4ABE191B2DAF0042B0DA /* NRFImageSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NRFImageSelectViewController.xib; sourceTree = "<group>"; };
 		38A51B671918765900FCB55D /* NotePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38A51B6A1918765900FCB55D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		38A51B6C1918765900FCB55D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -131,6 +136,9 @@
 				380D4AA019197E170042B0DA /* NRFTableViewController.h */,
 				380D4AB7191AE9AB0042B0DA /* NRFNoteDetailViewController.h */,
 				380D4AB8191AE9AB0042B0DA /* NRFNoteDetailViewController.m */,
+				380D4ABC191B2DAF0042B0DA /* NRFImageSelectViewController.h */,
+				380D4ABD191B2DAF0042B0DA /* NRFImageSelectViewController.m */,
+				380D4ABE191B2DAF0042B0DA /* NRFImageSelectViewController.xib */,
 				380D4AB9191AE9AB0042B0DA /* NRFNoteDetailViewController.xib */,
 				380D4AA119197E170042B0DA /* NRFTableViewController.m */,
 				38A51B991919253D00FCB55D /* NRFNote.h */,
@@ -250,6 +258,7 @@
 				38A51B751918765900FCB55D /* InfoPlist.strings in Resources */,
 				380D4ABB191AE9AB0042B0DA /* NRFNoteDetailViewController.xib in Resources */,
 				38A51B7D1918765900FCB55D /* Images.xcassets in Resources */,
+				380D4AC0191B2DAF0042B0DA /* NRFImageSelectViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +279,7 @@
 			files = (
 				380D4AA219197E170042B0DA /* NRFTableViewController.m in Sources */,
 				380D4AB5191A0B870042B0DA /* NRFNoteEditViewController.m in Sources */,
+				380D4ABF191B2DAF0042B0DA /* NRFImageSelectViewController.m in Sources */,
 				380D4ABA191AE9AB0042B0DA /* NRFNoteDetailViewController.m in Sources */,
 				38A51B771918765900FCB55D /* main.m in Sources */,
 				38A51B7B1918765900FCB55D /* NRFAppDelegate.m in Sources */,

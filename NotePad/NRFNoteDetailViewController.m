@@ -12,20 +12,23 @@
 @interface NRFNoteDetailViewController () <NRFNoteEditViewControllerDelegate>
 
 @property (nonatomic) NRFNote *note;
-@property (nonatomic) NSUInteger *row;
+@property (nonatomic) NSInteger row;
 
-@property (weak, nonatomic) IBOutlet UILabel *noteText;
+@property (weak, nonatomic) IBOutlet UITextView *noteText;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *time;
 
 @end
 
 @implementation NRFNoteDetailViewController
 
-- (id)initWithNote:(NRFNote *)note atRow:(NSUInteger *)row
+- (id)initWithNote:(NRFNote *)note atRow:(NSInteger)row withDelegate:(id<NRFNoteDetailViewControllerDelegate>)delegate
 {
     self = [super initWithNibName:@"NRFNoteDetailViewController" bundle:nil];
     if (self) {
         self.note = note;
         self.row = row;
+        self.delegate = delegate;
     }
     return self;
 }
@@ -42,6 +45,8 @@
 {
     self.title = self.note.title;
     self.noteText.text = self.note.content;
+    NSString *lastUpdated = [self.note.formatter stringFromDate:self.note.date];
+    self.time.text = lastUpdated;
     
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed:)];
     
@@ -61,7 +66,7 @@
 
 -(void) doneButtonPressed:(id)sender
 {
-    [self.delegate detailViewController:self didFinishWithNote:self.note atRow:*self.row];
+    [self.delegate detailViewController:self didFinishWithNote:self.note atRow:self.row];
 }
 
 -(void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note

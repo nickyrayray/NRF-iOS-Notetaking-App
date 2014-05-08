@@ -12,7 +12,10 @@
 
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSString *title;
-@property (nonatomic) NSDate *time;
+@property (nonatomic) NSDate *date;
+@property (nonatomic) NSDateFormatter *formatter;
 @property (nonatomic) UIImage *image;
+
+-(instancetype) init;
 
 @end

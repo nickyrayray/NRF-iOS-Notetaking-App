@@ -116,21 +116,27 @@
     NSString *cellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     NRFNote *current = self.notes[indexPath.row];
+    
     cell.textLabel.text = current.title;
+    cell.imageView.image = current.image;
+    NSString *lastUpdated = [current.formatter stringFromDate:current.date];
+    cell.detailTextLabel.text = lastUpdated;
+    
     return cell;
 }
 
-- (void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NRFNoteDetailViewController *noteDetailVC = [[NRFNoteDetailViewController alloc] initWithNote:self.notes[indexPath.row] atRow:(NSUInteger *)indexPath.row];
+    NRFNoteDetailViewController *noteDetailVC = [[NRFNoteDetailViewController alloc] initWithNote:self.notes[indexPath.row] atRow:indexPath.row withDelegate:self];
     
-    noteDetailVC.delegate = self;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self.navigationController pushViewController:noteDetailVC animated:YES];
+    
 }
 
 - (void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note
@@ -145,7 +151,7 @@
     
 }
 
-- (void) detailViewController:(NRFNoteDetailViewController *)noteDetailVC didFinishWithNote:(NRFNote *)note atRow:(NSUInteger)row
+- (void) detailViewController:(NRFNoteDetailViewController *)noteDetailVC didFinishWithNote:(NRFNote *)note atRow:(NSInteger)row
 {
     if(note)
     {

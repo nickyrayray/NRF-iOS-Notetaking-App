@@ -14,7 +14,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *noteTitle;
 
 @property (weak, nonatomic) IBOutlet UITextView *noteText;
+@property (weak, nonatomic) IBOutlet UILabel *noteTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *time;
 
 @property (nonatomic) NRFNote *note;
 
@@ -38,9 +41,13 @@
     if(self.note){
         [self.noteTitle setText:self.note.title];
         [self.noteText setText:self.note.content];
+        NSString * loadDate = [self.note.formatter stringFromDate:self.note.date];
+        self.time.text = loadDate;
+        self.title = @"Edit Note:";
+    } else {
+        self.title = @"Add Note:";
+        self.time.text = @"Now";
     }
-    
-    self.title = @"Add Note:";
     
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
     
@@ -57,6 +64,7 @@
     
     self.note.title = self.noteTitle.text;
     self.note.content = self.noteText.text;
+    self.note.date = [NSDate date];
     
     [self.delegate editViewController:self didFinishWithNote:self.note];
     
