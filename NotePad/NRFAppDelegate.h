@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NRFTableViewController.h"
 
 @interface NRFAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) NRFTableViewController *noteList;
 
 @end

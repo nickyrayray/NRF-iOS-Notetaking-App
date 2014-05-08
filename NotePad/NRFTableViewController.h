@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NRFTableViewController : UITableViewController
+@interface NRFTableViewController : UITableViewController <NSCoding>
 
 @end

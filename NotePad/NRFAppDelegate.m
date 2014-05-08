@@ -7,7 +7,6 @@
 //
 
 #import "NRFAppDelegate.h"
-#import "NRFTableViewController.h"
 
 @implementation NRFAppDelegate
 
@@ -16,6 +15,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     NRFTableViewController *noteList = [[NRFTableViewController alloc] init];
+    self.noteList = noteList;
+    [self loadData];
     UINavigationController *main = [[UINavigationController alloc] initWithRootViewController:noteList];
     
     self.window.rootViewController = main;
@@ -26,10 +27,35 @@
     return YES;
 }
 
+-(void) saveData
+{
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *myDataPath = [documentsPath stringByAppendingString:@"notePadData"];
+    NSURL *documentsURL = [NSURL URLWithString:myDataPath];
+    NSData *appData = [NSKeyedArchiver archivedDataWithRootObject:self.noteList];
+    [appData writeToURL:documentsURL atomically:YES];
+}
+
+-(void) loadData
+{
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *myDataPath = [documentsPath stringByAppendingString:@"notePadData"];
+    NSURL *documentsURL = [NSURL URLWithString:myDataPath];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if([fileManager fileExistsAtPath:myDataPath]){
+        NSData *appData = [[NSData alloc] initWithContentsOfURL:documentsURL];
+        NRFTableViewController *noteList = [NSKeyedUnarchiver unarchiveObjectWithData:appData];
+        self.noteList = noteList;
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [self saveData];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -51,6 +77,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self saveData];
 }
 
 @end

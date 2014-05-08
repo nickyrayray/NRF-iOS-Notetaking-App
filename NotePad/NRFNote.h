@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NRFNote : NSObject
+@interface NRFNote : NSObject <NSCoding>
 
 @property (nonatomic) NSString *content;
 @property (nonatomic) NSString *title;

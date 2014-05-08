@@ -34,6 +34,21 @@
     return self;
 }
 
+-(id) initWithCoder:(NSCoder *)decoder
+{
+    if(self = [super init])
+    {
+        NSArray *array = [decoder decodeObjectForKey:@"notes"];
+        self.notes = [[NSMutableArray alloc] initWithArray:array copyItems:YES];
+    }
+    return self;
+}
+
+-(void) encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.notes forKey:@"notes"];
+}
+
 - (void) loadView
 {
     [super loadView];
