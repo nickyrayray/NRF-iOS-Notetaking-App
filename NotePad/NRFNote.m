@@ -51,6 +51,7 @@
         copy.dateCreated = self.dateCreated;
         copy.lastModified = self.lastModified;
         copy.imagePath = self.imagePath;
+        copy.imageTitle = self.imageTitle;
     }
     return copy;
 }
