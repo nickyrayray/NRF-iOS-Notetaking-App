@@ -93,7 +93,7 @@
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     mailer.mailComposeDelegate = self;
     
-    if(![self.note.imagePath isEqualToString:@""]){
+    if(self.note.imagePath != nil){
         NSData *imageData = [NSData dataWithContentsOfFile:self.note.imagePath];
         NSString *fileName = [self.note.imageTitle stringByAppendingPathExtension:@"jpeg"];
         [mailer addAttachmentData:imageData mimeType:@"image/jpeg" fileName:fileName];
@@ -103,7 +103,7 @@
     
     [mailer setMessageBody:self.note.content isHTML:NO];
     
-    [self presentViewController:mailer animated:YES completion:nil];
+    [self presentViewController:mailer animated:NO completion:nil];
     
 }
 

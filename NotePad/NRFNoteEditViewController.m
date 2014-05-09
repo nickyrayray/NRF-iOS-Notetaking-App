@@ -66,6 +66,16 @@
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     
+    if([self.noteTitle.text isEqualToString:@""]){
+        [[[UIAlertView alloc] initWithTitle:@"No Title Found" message:@"Please enter a title for your note; otherwise use the back button to return to previous screen." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return;
+    }
+    
+    if([self.noteText.text isEqualToString:@""]){
+        [[[UIAlertView alloc] initWithTitle:@"No Content Found" message:@"Please enter content for your note; otherwise use the back button to return to previous screen." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return;
+    }
+    
     if(!self.note){
         NRFNote *note = [[NRFNote alloc] init];
         self.note = note;
