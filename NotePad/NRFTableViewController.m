@@ -136,9 +136,10 @@
     NRFNote *current = self.notes[indexPath.row];
     
     cell.textLabel.text = current.title;
-    cell.imageView.image = current.image;
-    NSString *lastUpdated = [current.formatter stringFromDate:current.date];
-    cell.detailTextLabel.text = lastUpdated;
+    UIImage *cellImage = [UIImage imageWithContentsOfFile:current.imagePath];
+    cell.imageView.image = cellImage;
+    NSString *cellDetail = [NSString stringWithFormat:@"%@%@", @"Created: ", current.dateCreated];
+    cell.detailTextLabel.text = cellDetail;
     
     return cell;
 }

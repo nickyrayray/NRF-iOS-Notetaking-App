@@ -9,9 +9,10 @@
                 <outlet property="noteText" destination="hta-NR-Kk1" id="tfv-rZ-7vp"/>
                 <outlet property="noteTextLabel" destination="nEj-wh-wy5" id="PtI-jc-0Wk"/>
                 <outlet property="noteTitle" destination="iju-w3-c1G" id="H94-zF-85A"/>
-                <outlet property="time" destination="6nc-Bz-m4r" id="jH9-pd-8SJ"/>
-                <outlet property="timeLabel" destination="7RP-ON-h3e" id="gnH-Oc-QBr"/>
-                <outlet property="title" destination="iju-w3-c1G" id="ouv-6t-Hnj"/>
+                <outlet property="timeCreated" destination="QJD-1C-msD" id="UuI-9D-PiI"/>
+                <outlet property="timeCreatedLabel" destination="DId-mx-AZw" id="Z0X-xh-dsj"/>
+                <outlet property="timeLastModified" destination="6nc-Bz-m4r" id="hSx-3R-Ii6"/>
+                <outlet property="timeLastModifiedLabel" destination="7RP-ON-h3e" id="6EX-nd-iy1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -39,14 +40,14 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last edited: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7RP-ON-h3e">
-                    <rect key="frame" x="25" y="357" width="81" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last Modified: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7RP-ON-h3e">
+                    <rect key="frame" x="25" y="375" width="96" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nc-Bz-m4r">
-                    <rect key="frame" x="105" y="357" width="179" height="21"/>
+                    <rect key="frame" x="121" y="375" width="179" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="highlightedColor"/>
@@ -61,6 +62,19 @@
                         <action selector="selectImageForNote:" destination="-1" eventType="touchUpInside" id="Q8c-qL-bBD"/>
                     </connections>
                 </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time Created:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DId-mx-AZw">
+                    <rect key="frame" x="25" y="351" width="108" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJD-1C-msD">
+                    <rect key="frame" x="121" y="351" width="179" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

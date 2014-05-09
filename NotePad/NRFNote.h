@@ -12,9 +12,9 @@
 
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSDate *date;
-@property (nonatomic, strong) NSDateFormatter *formatter;
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSString *dateCreated;
+@property (nonatomic, strong) NSString *lastModified;
+@property (nonatomic, strong) NSString *imagePath;
 @property (nonatomic, strong) NSString *imageTitle;
 
 -(instancetype) init;

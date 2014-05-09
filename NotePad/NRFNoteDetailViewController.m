@@ -7,17 +7,19 @@
 //
 
 #import "NRFNoteDetailViewController.h"
-#import "NRFNoteEditViewController.h"
 #import "NRFImageSelectViewController.h"
 
-@interface NRFNoteDetailViewController () <NRFNoteEditViewControllerDelegate>
+@interface NRFNoteDetailViewController () <NRFNoteEditViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic) NRFNote *note;
 @property (nonatomic) NSInteger row;
 
 @property (weak, nonatomic) IBOutlet UITextView *noteText;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *time;
+@property (weak, nonatomic) IBOutlet UILabel *timeLastModifiedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLastModified;
+@property (weak, nonatomic) IBOutlet UIButton *emailButton;
+@property (weak, nonatomic) IBOutlet UILabel *timeCreatedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeCreated;
 
 @end
 
@@ -38,16 +40,20 @@
 {
     [super viewDidLoad];
     
-    [self viewView];
+    [self updateView];
     
 }
 
--(void) viewView
+-(void) updateView
 {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    
     self.title = self.note.title;
     self.noteText.text = self.note.content;
-    NSString *lastUpdated = [self.note.formatter stringFromDate:self.note.date];
-    self.time.text = lastUpdated;
+    self.timeLastModified.text = self.note.lastModified;
+    self.timeCreated.text = self.note.dateCreated;
     
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed:)];
     
@@ -74,7 +80,7 @@
 {
     self.note = note;
     [self.navigationController popViewControllerAnimated:YES];
-    [self viewView];
+    [self updateView];
 }
 
 - (IBAction)viewPictureButtonPressed:(id)sender {
@@ -82,6 +88,12 @@
     [self.navigationController pushViewController:imageSelectVC animated:YES];
 }
 
+- (IBAction)emailButtonPressed:(id)sender {
+    
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    mailer.mailComposeDelegate = self;
+    
+}
 
 
 @end

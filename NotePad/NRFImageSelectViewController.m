@@ -51,8 +51,9 @@
     
         self.navigationItem.rightBarButtonItem = saveButton;
         self.title = @"Add Image";
-        if(self.note.image){
-            self.image = self.note.image;
+        if(self.note.imagePath){
+            UIImage *noteImage = [UIImage imageWithContentsOfFile:self.note.imagePath];
+            self.image = noteImage;
             self.imageView.image = self.image;
             self.imageTitle.text = self.note.imageTitle;
             [self.fetchButton setTitle:@"Change Image" forState:UIControlStateNormal];
@@ -62,16 +63,15 @@
         self.fetchButton.hidden = YES;
         self.imageTitle.hidden = YES;
         self.title = self.note.imageTitle;
-        self.image = self.note.image;
+        UIImage *noteImage = [UIImage imageWithContentsOfFile:self.note.imagePath];
+        self.image = noteImage;
         self.imageView.image = self.image;
     }
 }
 
 -(void) saveButtonPressed:(id)saveButtonPressed
 {
-    if(self.imageView.image){
-        self.note.image = self.image;
-    } else {
+    if(!self.imageView.image){
         [[[UIAlertView alloc] initWithTitle:@"No Image Found" message:@"Please select an image to save; otherwise use the back button to return to previous screen." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
         return;
     }
@@ -82,6 +82,15 @@
         [[[UIAlertView alloc] initWithTitle:@"No Image Title Found" message:@"Please input an image title at the bottom of the screen in the text field." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
         return;
     }
+    
+    NSData *imageData = UIImageJPEGRepresentation(self.imageView.image, 1.0f);
+    NSString *filename = [self.note.imageTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *imagePath = [documentsPath stringByAppendingPathComponent:filename];
+    [imageData writeToFile:imagePath atomically:YES];
+    
+    self.note.imagePath = imagePath;
+    self.image = self.imageView.image;
     
     [self.navigationController popViewControllerAnimated:YES];
 }

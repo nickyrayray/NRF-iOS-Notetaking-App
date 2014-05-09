@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <Foundation/Foundation.h>
 #import "NRFNoteEditViewController.h"
 
 @class NRFNoteDetailViewController;

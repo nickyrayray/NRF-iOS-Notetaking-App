@@ -16,9 +16,11 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *noteText;
 @property (weak, nonatomic) IBOutlet UILabel *noteTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLastModifiedLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *time;
+@property (weak, nonatomic) IBOutlet UILabel *timeLastModified;
+@property (weak, nonatomic) IBOutlet UILabel *timeCreatedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeCreated;
 
 @property (nonatomic) NRFNote *note;
 
@@ -42,12 +44,13 @@
     if(self.note){
         [self.noteTitle setText:self.note.title];
         [self.noteText setText:self.note.content];
-        NSString * loadDate = [self.note.formatter stringFromDate:self.note.date];
-        self.time.text = loadDate;
+        self.timeCreated.text = self.note.dateCreated;
+        self.timeLastModified.text = self.note.lastModified;
         self.title = @"Edit Note:";
     } else {
         self.title = @"Add Note:";
-        self.time.text = @"Now";
+        self.timeLastModified.text = @"Now";
+        self.timeCreated.text = @"Now";
     }
     
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
@@ -58,14 +61,20 @@
 
 - (void) saveButtonPressed:(id)sender
 {
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    
     if(!self.note){
         NRFNote *note = [[NRFNote alloc] init];
         self.note = note;
+        self.note.dateCreated = [formatter stringFromDate:[NSDate date]];
     }
     
     self.note.title = self.noteTitle.text;
     self.note.content = self.noteText.text;
-    self.note.date = [NSDate date];
+    self.note.lastModified = [formatter stringFromDate:[NSDate date]];
     
     [self.delegate editViewController:self didFinishWithNote:self.note];
     

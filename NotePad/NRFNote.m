@@ -14,9 +14,6 @@
 {
     self = [super init];
     if(self){
-        self.formatter = [[NSDateFormatter alloc] init];
-        [self.formatter setDateStyle:NSDateFormatterMediumStyle];
-        [self.formatter setTimeStyle:NSDateFormatterMediumStyle];
     }
     return self;
 }
@@ -27,9 +24,9 @@
     {
         self.title = [decoder decodeObjectForKey:@"title"];
         self.content = [decoder decodeObjectForKey:@"content"];
-        self.date = [decoder decodeObjectForKey:@"date"];
-        self.formatter = [decoder decodeObjectForKey:@"formatter"];
-        self.image = [decoder decodeObjectForKey:@"image"];
+        self.dateCreated = [decoder decodeObjectForKey:@"dateCreated"];
+        self.lastModified = [decoder decodeObjectForKey:@"lastModified"];
+        self.imagePath = [decoder decodeObjectForKey:@"imagePath"];
         self.imageTitle = [decoder decodeObjectForKey:@"imageTitle"];
     }
     return self;
@@ -39,9 +36,9 @@
 {
     [coder encodeObject:self.title forKey:@"title"];
     [coder encodeObject:self.content forKey:@"content"];
-    [coder encodeObject:self.date forKey:@"date"];
-    [coder encodeObject:self.formatter forKey:@"formatter"];
-    [coder encodeObject:self.image forKey:@"image"];
+    [coder encodeObject:self.dateCreated forKey:@"dateCreated"];
+    [coder encodeObject:self.lastModified forKey:@"lastModified"];
+    [coder encodeObject:self.imagePath forKey:@"imagePath"];
     [coder encodeObject:self.imageTitle forKey:@"imageTitle"];
 }
 
@@ -51,9 +48,9 @@
     if(copy){
         copy.title = self.title;
         copy.content = self.content;
-        copy.date = self.date;
-        copy.formatter = self.formatter;
-        copy.image = self.image;
+        copy.dateCreated = self.dateCreated;
+        copy.lastModified = self.lastModified;
+        copy.imagePath = self.imagePath;
     }
     return copy;
 }
