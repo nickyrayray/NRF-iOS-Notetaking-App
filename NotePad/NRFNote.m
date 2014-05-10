@@ -18,6 +18,8 @@
     return self;
 }
 
+/* NSCoding required methods */
+
 -(id) initWithCoder:(NSCoder *)decoder
 {
     if(self = [super init])
@@ -41,6 +43,8 @@
     [coder encodeObject:self.imagePath forKey:@"imagePath"];
     [coder encodeObject:self.imageTitle forKey:@"imageTitle"];
 }
+
+/* Method required to copy note objects into arrays */
 
 - (id) copyWithZone:(NSZone *)zone
 {

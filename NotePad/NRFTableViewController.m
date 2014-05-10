@@ -13,8 +13,8 @@
 
 @interface NRFTableViewController() <UITableViewDataSource, UITableViewDelegate,NRFNoteEditViewControllerDelegate, NRFNoteDetailViewControllerDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *notes;
+@property (nonatomic, strong) UITableView *tableView; //Main view for this app
+@property (nonatomic, strong) NSMutableArray *notes; //Array of note objects for the cells of the TableView
 
 @end
 
@@ -25,6 +25,7 @@
 
 @implementation NRFTableViewController
 
+
 - (instancetype) init
 {
     self = [super initWithStyle:UITableViewStylePlain];
@@ -34,6 +35,8 @@
     return self;
 }
 
+/* NSCoding methods to serialize this object in the AppDelegate */
+ 
 -(id) initWithCoder:(NSCoder *)decoder
 {
     if(self = [super init])
@@ -49,6 +52,7 @@
     [coder encodeObject:self.notes forKey:@"notes"];
 }
 
+//Loads the main view and assigns this controller as its delegate and datasource
 - (void) loadView
 {
     [super loadView];
@@ -59,20 +63,22 @@
     self.tableView = tableView;
 }
 
+//Loads more things into the main view.
 - (void) viewDidLoad
 {
     [super viewDidLoad];
     
     self.title = @"Notes";
-    [self selectView];
+    [self updateView];
     
 }
 
-- (void) selectView
+//Updates the view. Called initially on loading and again after editMode has been entered for the UITableView
+- (void) updateView
 {
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonPressed:)];
     
-    if(self.notes.count > 0){
+    if(self.notes.count > 0){ //Only want to be able to edit the list if there are note objects
         UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed:)];
         self.navigationItem.leftBarButtonItem = editButton;
     }
@@ -80,20 +86,15 @@
     self.navigationItem.rightBarButtonItem = addButton;
 }
 
-- (void) addButtonPressed:(id)sender
-{
-    NRFNoteEditViewController *noteEditVC = [[NRFNoteEditViewController alloc] initWithNote:nil];
-    noteEditVC.delegate = self;
-    
-    [self.navigationController pushViewController:noteEditVC animated:YES];
-    
-}
+/*Methods governing the editing of the TableView list.*/
 
+//Enter edit mode on the table to delete some notes. Called when user presses "Edit"
 -(void) editButtonPressed:(id)sender
 {
     [self setEditing:YES animated:YES];
 }
 
+//Called when user is trying to edit or is done editing the list of notes. Updates the View
 -(void) setEditing:(BOOL)editing animated:(BOOL)animated
 {
     if(editing){
@@ -104,28 +105,44 @@
         self.navigationItem.rightBarButtonItem = doneButton;
     } else {
         [super setEditing:NO animated:YES];
-        [self selectView];
+        [self updateView];
     }
 }
 
-
+//Done button is pressed and turns of editing mode.
 -(void) doneEditingPressed:(id)sender
 {
     [self setEditing:NO animated:YES];
 }
 
-
+//Delete a row and remove the represented note from the datasource
 -(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.notes removeObjectAtIndex:indexPath.row];
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
 
+/*Method governing the adding of rows and creating the associated view to do so*/
+
+//User is trying to add a note. Instantiate an edit view controller to edit/create a note.
+- (void) addButtonPressed:(id)sender
+{
+    NRFNoteEditViewController *noteEditVC = [[NRFNoteEditViewController alloc] initWithNote:nil];
+    noteEditVC.delegate = self;
+    
+    [self.navigationController pushViewController:noteEditVC animated:YES];
+    
+}
+
+/*UITableViewDataSource protocol methods*/
+
+//Number of rows in the TableView
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.notes.count;
 }
 
+//Responsible for generating and reusing the cells.
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier = @"Cell";
@@ -144,6 +161,9 @@
     return cell;
 }
 
+/*UITableViewDelegate protocol methods*/
+
+//Action taken when select a row. Creates a NoteDetailView to show the selected note's details
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -155,18 +175,24 @@
     
 }
 
+/*NRFNoteEditViewControllerDelegate method*/
+
+//updates the view and adds created note to the list
 - (void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note
 {
     [self.notes addObject:note];
     
     [self.tableView reloadData];
     
-    [self selectView];
+    [self updateView];
     
     [self.navigationController  popViewControllerAnimated:YES];
     
 }
 
+/*NRFNoteDetaileViewController delegate methods*/
+
+//updates the view and edits the cell of the note that was selected in the table
 - (void) detailViewController:(NRFNoteDetailViewController *)noteDetailVC didFinishWithNote:(NRFNote *)note atRow:(NSInteger)row
 {
     if(note)
@@ -178,7 +204,7 @@
     
     [self.tableView reloadData];
     
-    [self selectView];
+    [self updateView];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

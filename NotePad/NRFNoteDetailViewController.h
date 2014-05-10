@@ -13,6 +13,7 @@
 
 @class NRFNoteDetailViewController;
 
+//Protocol so that main table view can update the records
 @protocol NRFNoteDetailViewControllerDelegate <NSObject>
 
 - (void) detailViewController:(NRFNoteDetailViewController *)noteDetailVC

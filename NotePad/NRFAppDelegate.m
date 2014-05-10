@@ -27,7 +27,9 @@
     return YES;
 }
 
--(void) saveData
+/*Persistence methods*/
+
+-(void) saveData //Saves the data from the NRFTableViewController
 {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *myDataPath = [documentsPath stringByAppendingString:@"notePadData"];
@@ -36,7 +38,7 @@
     [appData writeToURL:documentsURL atomically:YES];
 }
 
--(void) loadData
+-(void) loadData //Loads the data from the NRFTableViewController
 {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *myDataPath = [documentsPath stringByAppendingString:@"notePadData"];

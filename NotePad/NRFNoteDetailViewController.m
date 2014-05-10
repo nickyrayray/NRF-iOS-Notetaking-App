@@ -25,6 +25,9 @@
 
 @implementation NRFNoteDetailViewController
 
+/*Housekeeping View Loading and styling methods*/
+
+//Will need all of these properties later
 - (id)initWithNote:(NRFNote *)note atRow:(NSInteger)row withDelegate:(id<NRFNoteDetailViewControllerDelegate>)delegate
 {
     self = [super initWithNibName:@"NRFNoteDetailViewController" bundle:nil];
@@ -44,12 +47,10 @@
     
 }
 
+//Updates the view after editing a note object.
 -(void) updateView
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterMediumStyle];
-    [formatter setTimeStyle:NSDateFormatterMediumStyle];
-    
+
     self.title = self.note.title;
     self.noteText.text = self.note.content;
     self.timeLastModified.text = self.note.lastModified;
@@ -63,6 +64,7 @@
     self.navigationItem.leftBarButtonItem = doneButton;
 }
 
+//User wants to edit the note so generates a note edit view controller to accomodate
 -(void) editButtonPressed:(id)sender
 {
     NRFNoteEditViewController *noteEditVC = [[NRFNoteEditViewController alloc] initWithNote:self.note];
@@ -71,10 +73,13 @@
     [self.navigationController pushViewController:noteEditVC animated:YES];
 }
 
+//User is finished viewing and wants to return to the main note list.
 -(void) doneButtonPressed:(id)sender
 {
     [self.delegate detailViewController:self didFinishWithNote:self.note atRow:self.row];
 }
+
+/*NRFNoteEditViewControllerDelegate protocol method*/
 
 -(void) editViewController:(NRFNoteEditViewController *)noteEditVC didFinishWithNote:(NRFNote *)note
 {
@@ -83,17 +88,19 @@
     [self updateView];
 }
 
+//NRFImageViewController generated in view mode
 - (IBAction)viewPictureButtonPressed:(id)sender {
     NRFImageSelectViewController *imageSelectVC = [[NRFImageSelectViewController alloc] initWithNote:self.note fromViewer:YES];
     [self.navigationController pushViewController:imageSelectVC animated:YES];
 }
 
+//User wants to generate an email so makes an MFMailComposeViewController to accomodate
 - (IBAction)emailButtonPressed:(id)sender {
     
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     mailer.mailComposeDelegate = self;
     
-    if(self.note.imagePath != nil){
+    if(self.note.imagePath != nil){//Only attach an image if one exists in the note
         NSData *imageData = [NSData dataWithContentsOfFile:self.note.imagePath];
         NSString *fileName = [self.note.imageTitle stringByAppendingPathExtension:@"jpeg"];
         [mailer addAttachmentData:imageData mimeType:@"image/jpeg" fileName:fileName];
@@ -106,6 +113,8 @@
     [self presentViewController:mailer animated:NO completion:nil];
     
 }
+
+/*MMFMailComposeViewControllerDelegate method*/
 
 -(void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {

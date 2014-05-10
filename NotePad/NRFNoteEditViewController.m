@@ -28,6 +28,8 @@
 
 @implementation NRFNoteEditViewController
 
+/*Housekeeping for creation of the view controller*/
+
 - (instancetype)initWithNote:(NRFNote *)note
 {
     self = [super initWithNibName:@"NRFNoteEditViewController" bundle:nil];
@@ -41,13 +43,16 @@
 {
     [super viewDidLoad];
     
-    if(self.note){
+    
+    if(self.note){//If a note exists load its values to edit them further.
+        
         [self.noteTitle setText:self.note.title];
         [self.noteText setText:self.note.content];
         self.timeCreated.text = self.note.dateCreated;
         self.timeLastModified.text = self.note.lastModified;
         self.title = @"Edit Note:";
-    } else {
+        
+    } else {//No note so update the View to default values
         self.title = @"Add Note:";
         self.timeLastModified.text = @"Now";
         self.timeCreated.text = @"Now";
@@ -59,6 +64,8 @@
     
 }
 
+/*User wants to save changes to a note. So either updates a note object's properties
+ or creates the note based on the properties the user has entered.*/
 - (void) saveButtonPressed:(id)sender
 {
     
@@ -66,22 +73,23 @@
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     
-    if([self.noteTitle.text isEqualToString:@""]){
+    if([self.noteTitle.text isEqualToString:@""]){//Make sure the note has a title.
         [[[UIAlertView alloc] initWithTitle:@"No Title Found" message:@"Please enter a title for your note; otherwise use the back button to return to previous screen." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
         return;
     }
     
-    if([self.noteText.text isEqualToString:@""]){
+    if([self.noteText.text isEqualToString:@""]){//Make sure the note has content
         [[[UIAlertView alloc] initWithTitle:@"No Content Found" message:@"Please enter content for your note; otherwise use the back button to return to previous screen." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
         return;
     }
     
-    if(!self.note){
+    if(!self.note){ //If the note doesn't exist, create it.
         NRFNote *note = [[NRFNote alloc] init];
         self.note = note;
         self.note.dateCreated = [formatter stringFromDate:[NSDate date]];
     }
     
+    //Update the note's properties
     self.note.title = self.noteTitle.text;
     self.note.content = self.noteText.text;
     self.note.lastModified = [formatter stringFromDate:[NSDate date]];
@@ -90,6 +98,7 @@
     
 }
 
+//User wants to add an image so generate an NRFImageSelectViewController in edit mode
 - (IBAction)selectImageForNote:(id)sender {
     NRFImageSelectViewController *imageSelectorVC = [[NRFImageSelectViewController alloc] initWithNote:self.note];
     [self.navigationController pushViewController:imageSelectorVC animated:YES];
