@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLastModified;
 @property (weak, nonatomic) IBOutlet UILabel *timeCreatedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeCreated;
+@property (strong, nonatomic) UIToolbar *keyboardBar;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (nonatomic) NRFNote *note;
 
@@ -43,6 +45,15 @@
 {
     [super viewDidLoad];
     
+    //Creates a toolbar that allows you to remove the keyboard during typing.
+    //Unfortunately I couldn't get the view to scroll while the keyboard was working.
+    self.keyboardBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 35)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneButtonPressed:)];
+    UIBarButtonItem *emptySpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    self.keyboardBar.items = @[emptySpace, doneButton];
+    
+    self.noteText.inputAccessoryView = self.keyboardBar;
+    self.noteTitle.inputAccessoryView = self.keyboardBar;
     
     if(self.note){//If a note exists load its values to edit them further.
         
@@ -52,8 +63,10 @@
         self.timeLastModified.text = self.note.lastModified;
         self.title = @"Edit Note:";
         
-    } else {//No note so update the View to default values
+    } else {//No note so update the View to default values and allocate space for a new note
         self.title = @"Add Note:";
+        NRFNote *note = [[NRFNote alloc] init];
+        self.note = note;
         self.timeLastModified.text = @"Now";
         self.timeCreated.text = @"Now";
     }
@@ -62,6 +75,13 @@
     
     self.navigationItem.rightBarButtonItem = saveButton;
     
+}
+
+//Make sure to remove the keyboard when done is pressed for either the textfield or textview
+-(void) doneButtonPressed:(id)sender
+{
+    [self.noteTitle resignFirstResponder];
+    [self.noteText resignFirstResponder];
 }
 
 /*User wants to save changes to a note. So either updates a note object's properties
@@ -83,9 +103,7 @@
         return;
     }
     
-    if(!self.note){ //If the note doesn't exist, create it.
-        NRFNote *note = [[NRFNote alloc] init];
-        self.note = note;
+    if(self.note.dateCreated == nil){
         self.note.dateCreated = [formatter stringFromDate:[NSDate date]];
     }
     
